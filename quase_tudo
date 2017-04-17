@@ -1,0 +1,1199 @@
+/*
+
+Tipo do problema: Criar um Programa para uma locadora
+
+Nome do programa: N/A
+
+Programadores: Fernanda, Akimoto, Luiz, Igor, Elvis
+
+Instrutor: Cristiane
+
+Data Inicio: 27/10
+
+*/
+
+
+//Lib Padrão
+#include <stdlib.h>
+
+//Necessário para capturar a data e hora
+#include <time.h>
+
+//Lib Padrão de saída de dados
+#include <stdio.h>
+
+//Usada para reconhecer os caracteres especiais na parte ortográfica
+#include <locale.h>
+
+//Biblioteca usada para a comparação de Strings
+#include <string.h>
+
+//Estrutura para os dados do Cliente
+
+struct cliente
+
+{
+	
+	char nome[40];
+
+		char ende[40];
+
+			char email[40];
+
+				char cel [20];
+
+					char what[20];
+
+						char rg[40];
+
+							char cpf[40];
+				
+								int cod;
+};
+
+	cliente clie;
+
+//Estrutura para os dados do Filme
+
+struct filme
+
+{
+	
+	int codigofita;
+
+		char filme[40];
+
+			char clas[40];
+
+				char sino[40];
+
+					char dur [20];
+
+						char ano [6];
+};
+
+	filme loc;
+
+//Estrutura para os dados da devolução
+
+struct devolucao
+
+{
+		int data_dev;
+		
+			int codf;
+				
+				int codclie;
+					
+					int saldo;	
+					
+						int data_loca;		
+};
+
+	devolucao luc;
+
+//Estrutura para os dados da locação
+
+struct locacao
+
+{
+		int data_loca;
+		
+			int codf;
+
+				int codclie;
+
+};
+
+	locacao pqp;
+	
+//Criação de Funções para cada opção
+
+		void menu();
+
+			void sair();
+
+				void cadastro();
+
+					void cadastrof();
+
+						void locacao();
+
+							void devolucao();
+
+								void relatorio_menu();
+
+									void relacad();
+
+										void relafil();
+
+											void reladeb();
+												
+												void relapag();
+
+//Inicio do Programa
+
+
+int main ()
+
+{
+
+	//parte da sintaxe para utilização de acentuação
+	
+	setlocale(LC_ALL, "Portuguese");
+    
+		int indice = 0;
+    		
+			char senha[5],verifica,user [10];
+	
+	// constante definida com os dados para comparação e validação do usuário e senha
+	
+	const char *log = "admin", *sen = "1234";
+
+				printf ("Login:");
+	
+					gets (user);
+	
+						fflush ( stdin );
+
+							printf("Senha:");
+	
+								gets (senha);
+	
+	//condição de comparação do usuário e senha digitados para os ja definidos
+	
+	if ((strcmp(user, log) == 0) && (strcmp(senha,sen) == 0 ))
+	
+	{
+					menu ();
+					
+				system ("cls");
+	
+	}
+	
+	else
+	
+	{
+		
+			printf ("Erro");
+				system ("cls");
+		
+					main ();
+	}
+    
+}
+
+//função do menu de opções
+
+
+void menu ()
+
+{
+	system ("cls");
+	
+	//Declaração de cada variavel
+
+	int n=0;
+
+		//Printf de apresentação
+	
+		printf("\n");
+		
+		printf("\n");
+	
+	printf("===================== \n");
+	printf("|Locadora Quase Tudo| \n");
+	printf("===================== \n");
+	
+		printf("\n");
+
+	//Apresentação do Menu de opções
+
+do
+
+	{
+		printf("============================\n");
+		
+			printf("\n");
+		
+		printf("============================ \n");
+		printf("1     Cadastro de Cliente    \n");
+		printf("============================ \n");
+		
+			printf("\n");
+		
+		printf("============================ \n");
+		printf("2     Cadastro de Filmes     \n");
+		printf("============================ \n");
+		
+			printf("\n");
+		
+		printf("============================ \n");
+		printf("3           Locação          \n");
+		printf("============================ \n");
+		
+			printf("\n");
+		
+		printf("============================ \n");
+		printf("4          Devolução         \n");
+		printf("============================ \n");
+		
+			printf("\n");
+		
+		printf("============================ \n");
+		printf("5          Relatório         \n");
+		printf("============================ \n");
+		
+			printf("\n");
+		
+		printf("============================ \n");
+		printf("6            Sair            \n");
+		printf("============================ \n");
+		
+			printf("\n");
+
+		printf("============================ \n");
+		
+			printf("\n");
+		
+		// Seleção de uma das opções
+		
+			printf("Informe Uma da opcoes que deseja:");
+				
+				scanf("%d",&n);
+
+	// Inicio do Case
+
+		switch (n)
+	
+	{
+	
+		case 1:cadastro();
+
+			break;
+
+		case 2:cadastrof ();
+		
+			break;
+
+		case 3:locacao ();
+
+			break;
+
+		case 4:devolucao ();
+			
+			break;
+
+		case 5:relatorio_menu();
+			
+			break;
+
+		case 6:sair();
+			
+			break;
+
+			default:system ("cls");
+
+				printf ("Valor invalido \n");
+
+							system ("pause");
+
+	}
+
+	n++;
+	
+	}	
+	
+	while(n<0);
+	
+	//Limpar a tela após ação de cada escolha
+	
+	system ("cls");
+	
+	}
+
+// Função de cadastro Cliente
+
+
+void cadastro ()
+
+{
+	system ("cls");
+
+	//Sintaxe para utilizar o comando para criação e edição de arquivos
+		
+		 FILE *fp;
+		 
+    	/*
+    	
+    Criação e abertura do arquivo de texto. O campo "a" informa que os dados inseridos anteriormente não serão apagados, segue cada opção.
+    
+a - abre um arquivo para inserção. Se o arquivo não existir, o sistema operacional tentará criá-lo.
+r - abre um arquivo existente para leitura.
+w - abre um arquivo para escrita. Se o arquivo não existir, o sistema operacional tentará criá-lo. Se o arquivo existir
+  todo o seu conteúdo será substituído pelo novo conteúdo.
+r+ - abre um arquivo existente para leitura e gravação.
+w+ - abre um arquivo para leitura e escrita. Se o arquivo não existir, o sistema operacional tentará criá-lo. Se o arquivo existir
+  todo o seu conteúdo será substituído pelo novo conteúdo.
+a+ - abre um arquivo para inserção e leitura. Se o arquivo não existir, o sistema operacional tentará criá-lo.
+
+*/
+    
+   fp = fopen("arquivo.log","a"); 
+   
+   // Erro na abertura caso "fp" não exista ou esteja aberto
+   
+   if(!fp)
+   
+    {
+    	
+      printf( "Erro na abertura do arquivo");
+      
+      exit(0);
+    }
+       
+       //Recebimento de cada informação e armazenamento em sua respectiva estrutura
+       
+       fprintf (fp,"=============================================================\n" );
+       
+        printf ("Informe o codigo do Cliente:");
+        
+     		scanf ("%d", &clie.cod);
+     	
+		 //Armazena todas as informções digitadas em um arquivo de texto
+		 		 
+     	 fprintf (fp,"Codigo: %d \n", clie.cod);
+     	 
+    fflush (stdin);
+       
+	// Recebimento das informações do CLiente  
+   
+   printf("Informe um Nome:");
+   
+   gets (clie.nome);
+   
+   fprintf (fp , "Nome:%s \n",clie.nome);
+
+	 fflush (stdin);
+	 
+
+	  printf ("Informe o Endereço:");
+
+     gets (clie.ende);
+
+    fprintf (fp,"Endereco: %s \n", clie.ende);
+
+	 fflush (stdin);
+	  
+
+	  printf ("Informe o Telefone:");
+
+      gets(clie.cel);	 
+
+	  fprintf (fp,"Telefone: %s \n", clie.cel);
+
+	  fflush (stdin);
+	  
+		 printf ("Informe o RG:");
+
+          gets(clie.rg);	 
+
+	 	 fprintf (fp,"RG: %s \n", clie.rg);
+
+		fflush (stdin);
+	
+			printf ("Informe o CPF:");
+
+   				 gets(clie.cpf);	 
+
+   					 fprintf (fp,"CPF: %s \n", clie.cpf);
+
+						fflush (stdin);
+		  
+	  				  printf ("Informe o E-mail:");
+
+      			   gets(clie.email);	 
+
+			  fprintf (fp,"E-mail: %s \n", clie.email);
+
+		fflush (stdin);
+	
+    		printf ("Informe o Whatsapp:");
+
+    			gets(clie.what);	 
+
+					fprintf (fp,"Whatsapp: %s \n", clie.what);
+
+						fflush (stdin);
+	
+ 				  			printf ("Operaçao Realizada com sucesso! \n");
+	
+   		// Pega a Data e a Hora do sistema
+	    
+       time_t hora_atual;
+
+   		time(&hora_atual);  // Pega o tempo em segundos
+   
+   		//Armazena a Data e hora na ultima linha do arquivo para confência posterior
+   
+   			fprintf(fp, "Cadastrado feito no Dia e Hora: %s", ctime(&hora_atual));
+
+				fprintf(fp, "\n");
+	
+	// Fecha o arquivo de texto para recebimento de informações
+			fprintf (fp,"=============================================================\n" );
+	  
+   fclose(fp);
+   
+   //Apresenta a informação de concluido após inserir os dados
+      	
+      	printf ("Operação Realizada com Sucesso!");
+      	
+			system ("pause");
+
+				menu ();
+}
+
+//Função de cadastro do Filme
+
+
+	void cadastrof()
+
+{ 
+
+	int ano,ano2;
+
+	system ("cls");
+		
+ 		FILE *fl;
+
+ 			fl = fopen("Filmes.log","a"); 
+
+ 	if(!fl)
+ 
+    {
+    	
+     			 printf( "Erro na abertura do arquivo");
+      
+					  exit(0);
+    
+	}
+			fprintf (fl,"=============================================================\n" );
+			
+			printf("Insira um código para o Filme:");
+	
+				scanf("%d",&loc.codigofita);
+	
+					fprintf (fl,"Codigo Do Filme: %d \n", loc.codigofita);
+	
+						fflush (stdin);
+		
+	 		printf("Informe o Nome  do Filme:");
+	
+				 gets (loc.filme);
+	
+					 fprintf (fl,"Nome Do Filme: %s \n", loc.filme );
+	
+						 fflush (stdin);
+	 
+			printf("Insira a duração o Filme. EX(3h,200min):");
+    
+				gets (loc.dur);
+    
+					fprintf (fl,"Duraçao Do Filme: %s \n", loc.dur);
+    
+						fflush (stdin);
+    	
+		  printf("Sinopse (nao utilize acentos):");
+	
+				gets (loc.sino);
+	
+					fprintf (fl,"Sinopse Do Filme: %s \n", loc.sino);
+	
+						fflush (stdin);
+		
+	  			 printf ("Classificação Indicativa:");
+  	
+	  				gets(loc.clas);
+  	
+					  	fprintf (fl,"Classificaçao Indicativa Do Filme: %s \n", loc.clas);
+	
+							fflush (stdin);
+						
+	   				printf ("Ano de lançamento:");
+  	
+	  					gets (loc.ano);
+	
+							fprintf (fl,"Ano de lançamento do Filme: %s \n", loc.ano);
+	
+								fflush (stdin);
+	
+								fprintf (fl,"=============================================================\n" );
+	
+									fclose(fl);
+		
+		// condição para verificar se o ano digitado e armazenado na estrutura bate com a definida na variavel "ano1"
+	
+	ano2 = atoi(loc.ano);	
+	
+	/* O comando "atoi" transforma um numero digitado com string para int, logo no comando acima armazena o valor digitado
+	na string da estrutura "loc.ano" e armazena o numero na variavel int "ano2" que será utilizada logo abaixo.
+	*/
+					
+	if ( ano2 >= 2015 )
+	
+	{
+		
+		printf("Filme em lançamento!! \n");
+		
+		printf("Valor de locação de R$20,00  \n");
+		
+		system ("pause");
+		
+		system ("cls");
+
+			printf ("Operação Realizada com sucesso! \n");
+	
+		menu ();
+		
+	}
+	
+	else
+	
+	{
+		printf("Valor de locação de R$15,50 \n");
+	
+		system("pause");
+	
+		system ("cls");
+		
+		printf ("Operação Realizada com sucesso! \n");
+		
+		menu ();
+	}
+
+}
+
+//função de locação
+
+
+	void locacao ()
+	
+	{ 
+			int loc = 1;
+			int neww;
+		
+				system ("cls");
+
+		//Sintaxe para utilizar o comando para criação e edição de arquivos
+		
+		 FILE *fr;
+    
+	/*
+    Criação e abertura do arquivo de texto. O campo "a" informa que os dados inseridos anteriormente não serão apagados, segue cada opção.
+    
+	a - abre um arquivo para inserção. Se o arquivo não existir, o sistema operacional tentará criá-lo.
+	r - abre um arquivo existente para leitura.
+	w - abre um arquivo para escrita. Se o arquivo não existir, o sistema operacional tentará criá-lo. Se o arquivo existir
+  	todo o seu conteúdo será substituído pelo novo conteúdo.
+	r+ - abre um arquivo existente para leitura e gravação.
+	w+ - abre um arquivo para leitura e escrita. Se o arquivo não existir, o sistema operacional tentará criá-lo. Se o arquivo existir
+  	todo o seu conteúdo será substituído pelo novo conteúdo.
+	a+ - abre um arquivo para inserção e leitura. Se o arquivo não existir, o sistema operacional tentará criá-lo.
+
+	*/
+    
+  		 fr = fopen("clientes_debito.log","a"); 
+   
+   		// Erro na abertura caso "fr" não exista ou esteja aberto
+   
+   			if(!fr)
+    
+	{
+     		 printf( "Erro na abertura do arquivo");
+      
+	  			exit(0);
+      
+    }
+    
+			printf("informe o código do filme:");
+				
+				scanf("%d", &pqp.codf);
+					
+					fprintf (fr,"Codigo do Filme %d \n", pqp.codf );
+		
+						fflush (stdin);
+					
+			printf("informe o código do cliente:");
+				
+				scanf("%d",&pqp.codclie);
+					
+					fprintf (fr,"Codigo do Cliente: %d \n", pqp.codclie);
+				
+						fflush (stdin);
+		
+					printf ("Informe somente o DIA de Locacao: ");
+
+						scanf ("%d", &pqp.data_loca);
+				
+								fprintf (fr,"Data de locaçao Do Filme: %d\n", pqp.data_loca);
+						
+						fflush (stdin);
+		
+								fclose(fr);
+			
+	system ("cls");
+
+	//Sintaxe para utilizar o comando para criação e edição de arquivos
+		
+		 FILE *frd;
+    
+   				frd = fopen("debito.log","a"); 
+   
+   // Erro na abertura caso "frd" não exista ou esteja aberto
+   
+   		if(!frd)
+   
+    {
+    	
+     	 printf( "Erro na abertura do arquivo");
+      
+	  		exit(0);
+      
+    }
+    
+			
+		// Cria um arquivo com os dados do cliente e do filme assim que realiza a locação do Filme salvando esses dados em um arquivo para o relatorio de Débitos
+			
+	fprintf (frd,"=============================================================\n" );
+		
+		fprintf (frd,"Codigo do Filme %d \n", pqp.codf );
+		
+			fprintf (frd,"Codigo do Cliente: %d \n", pqp.codclie);
+			
+				fprintf (frd , "Nome:%s \n",clie.nome);
+				
+					neww = pqp.data_loca + 3;
+				
+					fprintf (fr,"Data de devoluçao Do Filme: %d \n", neww);
+					
+						fprintf (frd,"=============================================================\n" );		
+				
+								fclose(frd);
+		
+		menu();
+										
+		}
+
+	//Função de Devolução
+	
+	
+	void devolucao ()
+	
+	{
+		int neww,dif,ano2,op,dif2;
+		
+		float neww1,neww2,troco,din;
+		
+		system("cls");
+		
+		printf ("Informe o código do filme: ");
+		
+		scanf("%d",&luc.codf);
+		
+		printf ("Informe o código do cliente:");
+		
+		scanf("%d",&luc.codclie);
+		
+		printf ("Filme foi Locado no dia: %d \n",pqp.data_loca);
+		
+		printf ("Data de Devolução (informe somente a data):");
+		
+		scanf("%d",&luc.data_dev);
+		
+		ano2 = atoi(loc.ano);
+		
+		neww = pqp.data_loca + 3;
+						
+			if (luc.data_dev > neww )
+			
+			{
+			
+				printf ("Devolução fora do prazo, o Filme deveria ter sido entregue no dia %d, será acrescentado R$5,20 por dia de acréscimo. \n",neww);
+			
+			system("pause > null");	
+						
+			}
+		
+		if (ano2 >= 2015 )
+		
+		{
+			neww1 = 20.00;
+			
+			dif=luc.data_dev - pqp.data_loca;
+			
+			dif2=dif-3;
+			
+			if (dif > 3 )
+			
+			{
+				neww1 = neww1 + (dif2*5.20);
+				
+				printf(" Valor a ser Pago é de: R$%.2f \n", neww1);
+				
+				system("pause >> null");	
+			
+			
+			}
+			
+			else
+			{
+			printf(" Valor a ser Pago é de: R$%.2f \n", neww1);
+			
+			system("pause >> null");
+			
+		}
+	}
+		
+		else if (ano2 < 2015)
+		
+		{
+			
+			neww2 = 15.50;
+			
+				dif=luc.data_dev - pqp.data_loca;
+				
+				dif2 = dif-3;
+				
+			if ( dif > 3 )
+			
+			{
+				neww2 = neww2 + (dif2 * 5.20);
+			
+				printf(" Valor a ser Pago é de: R$%.2f \n", neww2);
+				
+				system("pause >> null");	
+						
+			}
+			
+			else
+			
+			{
+				
+			printf(" Valor a ser Pago é de: R$%.2f \n", neww2);
+			
+			system("pause >> null");
+		}
+	}
+	
+			printf("Favor informar a forma de pagamento, 1 para Cartão > 2 para dinheiro:");
+			
+			scanf("%d", &op);
+			
+			if(op == 1 )
+			
+			{
+				printf("Locação Paga! \n");
+				
+				menu ();
+			}
+			
+			if (op == 2)
+			
+			{
+				printf("Informe o valor recebido em dinheiro:");
+				
+				scanf("%f", &din);
+				
+				if (ano2 >= 2015 )
+				
+				{
+					troco = din - neww1;
+					
+					printf("O troco é: %.2f \n",troco);
+				
+				system("pause");
+				}
+					else
+					
+					{
+						troco = din - neww2;
+						
+						printf("O troco é: %.2f \n",troco);
+						
+						system("pause");
+			}
+		}
+	
+		 FILE *frv;
+    
+   	
+	   			frv = fopen("pago.log","a"); 
+   
+   // Erro na abertura caso "frd" não exista ou esteja aberto
+   
+   		if(!frv)
+   
+    {
+    	
+     	 printf( "Erro na abertura do arquivo");
+      
+	  		exit(0);
+      
+    }
+    
+			
+		// Cria um arquivo com os dados do cliente e do filme assim que realiza a locação do Filme salvando esses dados em um arquivo para o relatorio de Débitos
+			
+	fprintf (frv,"=============================================================\n" );
+		
+		fprintf (frv,"Codigo do Filme %d \n", pqp.codf );
+		
+			fprintf (frv,"Codigo do Cliente: %d \n", pqp.codclie);
+			
+				fprintf (frv , "Nome:%s \n",clie.nome);
+				
+					neww = pqp.data_loca + 3;
+				
+					fprintf (frv,"Data de devoluçao Do Filme: %d \n", neww);
+					
+						fprintf (frv,"=============================================================\n" );		
+				
+								fclose(frv);
+		
+		menu();
+	
+		}
+	
+
+
+// função de relatorio
+
+
+	void relatorio_menu ()
+
+{
+		
+	system ("cls");
+	
+	//Declaração de cada variavel
+
+	int n=0;
+
+	//Printf de apresentação
+		
+	printf("\n");
+	
+		printf("\n");
+	
+	printf("========== \n");
+	printf("|Relatórios| \n");
+	printf("========== \n");
+	
+			printf("\n");
+
+	//Apresentação do Menu de opções
+
+	do
+
+	{
+		printf("=================================== \n");
+		
+			printf("\n");
+		
+		printf("=================================== \n");
+		printf("1   Relatório de Clientes Em débito \n");
+		printf("=================================== \n");
+		
+			printf("\n");
+		
+		printf("=================================== \n");
+		printf("2   Relatório de Cliente Pagos      \n");
+		printf("=================================== \n");
+		
+			printf("\n");
+		
+		printf("=================================== \n");
+		printf("3   Relatório de Filmes Cadastrados \n");
+		printf("=================================== \n");
+		
+			printf("\n");
+		
+		printf("=================================== \n");
+		printf("4  Relatório de Cliente Cadastrados \n");
+		printf("=================================== \n");
+		
+			printf("\n");
+		
+		printf("=================================== \n");
+		printf("5  Voltar para o Menu Principal    \n");
+		printf("=================================== \n");
+		
+			printf("\n");
+		
+		printf("=================================== \n");
+		printf("6            Sair            \n");
+		printf("=================================== \n");
+			
+			printf("\n");
+
+		printf("=================================== \n");
+		
+			printf("\n");
+		
+		// Seleção de uma das opções
+		
+		printf("Informe Uma da opcoes que deseja:");
+		
+			scanf("%d",&n);
+
+		// Inicio do Case
+
+	switch (n)
+	
+	{
+
+	case 1:reladeb();
+		
+			break;
+
+	case 2:relapag();
+	
+			break;
+
+	case 3:relafil();
+
+			break;
+
+	case 4:relacad();
+		
+			break;
+
+	case 5:menu();
+	
+			break;
+
+	case 6:sair();
+		
+			break;
+
+			default:system ("cls");
+		
+				printf ("Valor invalido \n");
+
+					system ("pause");
+
+	}
+
+		n++;
+	
+	}	
+	
+		while(n<0);
+	
+		//Limpar a tela após ação de cada escolha
+	
+		system ("cls");
+	
+		//Retorna o menu  com a tela limpa após cada função executada
+	
+			menu ();
+	
+	}
+
+
+	void reladeb()
+	
+	{
+	
+	system ("cls");
+	
+		printf(" Clientes em débito \n ");
+	
+	  	 FILE *fpg;
+	   
+   			int c;
+
+   				fpg = fopen("debito.log","r");
+   
+   	while(1)
+   
+   {
+      c = fgetc(fpg);
+      
+     	 if( feof(fpg))
+      
+      {
+      	
+         break;
+         
+      }
+	 
+		printf("%c", c); 
+   
+   }
+   
+   			system("pause");
+   
+   		relatorio_menu ();
+   
+   		fclose(fpg);
+      
+ 	}
+	
+	
+	void relapag()
+
+	{
+			system ("cls");
+	
+		printf(" Clientes em Dia \n ");
+	
+	  	 FILE *fpg;
+	   
+   			int c;
+
+   				fpg = fopen("pago.log","r");
+   
+   	while(1)
+   
+   {
+      c = fgetc(fpg);
+      
+     	 if( feof(fpg))
+      
+      {
+      	
+         break;
+         
+      }
+	 
+		printf("%c", c); 
+   
+   }
+   
+   			system("pause");
+   
+   		relatorio_menu ();
+   
+   		fclose(fpg);
+   					
+ 	}
+
+
+	void relafil()
+
+	{
+	system ("cls");
+		
+	printf(" Relatório de Filmes Cadastrados \n ");
+	
+	   FILE *fpf;
+   			
+			   int c;
+
+   		fpf = fopen("filmes.log","r");
+   
+   while(1)
+   
+   {
+      c = fgetc(fpf);
+      
+      if( feof(fpf))
+      
+      {
+      	
+         break;
+              
+	  }
+	 
+		printf("%c", c); 
+   
+   }
+   
+   		system("pause");
+  
+  		relatorio_menu ();
+  
+  			 fclose(fpf);
+  			 
+   }
+
+
+	void relacad()
+
+	{
+	system ("cls");
+	
+	
+	printf(" Relatório de Clientes \n ");
+	
+	   FILE *fpc;
+  
+  	 int c;
+
+  		 fpc = fopen("arquivo.log","r");
+  
+   	while(1)
+   
+   {
+      c = fgetc(fpc);
+     
+	  if( feof(fpc))
+     	
+	  {
+        
+		 break;
+		 
+      }
+	 
+		printf("%c", c); 
+		
+   }
+   
+   		system("pause");
+   			
+			   fclose(fpc);
+   
+   relatorio_menu ();
+   
+	}
+
+	void sair ()
+
+	{
+		system ("cls");
+
+     int sair;
+     
+	 do
+	 
+	 	 { 
+	 	 
+     		printf("Deseja realmente sair?\n");
+     	
+		 		printf("(1) SIM ou (2) NAO\n");
+     	
+					 scanf("%i",&sair);
+     
+	 		system ("cls");
+  
+    	switch(sair)
+    	
+			{
+    			
+        case 1: printf("Saindo do programa.....\n"); exit(0);
+        
+		case 2: menu();
+        
+		default: printf("\n Opcao invalida \n");
+   		
+		    } 
+		    
+    	} 
+	
+	while(sair!=1 || sair!=2);  
+		                
+	}
+     
+    
