@@ -1,0 +1,81 @@
+/* 
+
+Programa deve solicitar uma palavra para o usuário, fazer a contagem 
+das letras, fazer o calculo do Fatorial e trocar as letas de acordo o resultado do fatorial.
+
+O programa faz a contagem de Letras normalmente, faz o calculo do fatorial. Até o momento são as funções
+que estão funcionando corretamente, ficando pendente mostrar a numeração correta na exibição do anagrama
+e randomizar as letras na mesma quantidade que é apresentada e não repetindo a palavra.
+
+*/
+
+#include <stdlib.h>
+#include <iostream>
+#include <locale>
+#include <string.h>
+
+using namespace std;
+
+double fatorial(double numero);
+
+double fatorial(double numero) //O calculo do fatorial e feito aqui
+
+{
+   double aux;
+   aux = numero;
+   while(numero > 1)
+   {
+      aux = aux * (numero-1);
+      numero--;
+   }
+   return (aux);
+}
+
+
+//4 letter word scrambler (ex. test tets tset...)
+int counter=0;
+
+int main(int argc, char* argv[])
+{
+//	double aux;
+       char str[20];
+    int numero, aux,numero1,i;
+       aux = numero;
+    	setlocale(LC_ALL, "Portuguese");
+    cout << "Digite uma frase ou numero SEM ESPAÇOS: ";
+   
+   gets (str);
+
+   numero = strlen(str);
+   
+   numero1 = fatorial(numero);
+
+   cout << "\nTotal de letras da Frase : " << numero;
+      
+   cout << "\n\n";
+	
+	cout << "O fatorial da palavra digitada é: " << numero1;
+	
+	cout << "\n\n";
+	
+   system ("pause");
+
+   while(numero1 != 1)
+   {
+   		i=0;
+   		
+		   aux = aux * (numero1-1);
+    
+	  numero1--;
+      
+    for (int i=0;i<=numero;i++){
+        swap(str[i], str[i+1]);
+        counter+=1;
+        cout <<counter<<" "<< str << endl;
+    }
+}
+      
+
+    system("PAUSE");
+    return 0;
+}
