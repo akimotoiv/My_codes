@@ -32,17 +32,16 @@ double fatorial(double numero) //O calculo do fatorial e feito aqui
 }
 
 
-//4 letter word scrambler (ex. test tets tset...)
-int counter=0;
+	int counter=0;
 
-int main(int argc, char* argv[])
-{
-//	double aux;
+	int main(int argc, char* argv[])
+
+	{
        char str[20];
-    int numero, aux,numero1,i;
-       aux = numero;
+	    int numero, aux,numero1,i;
+       	aux = numero;
     	setlocale(LC_ALL, "Portuguese");
-    cout << "Digite uma frase ou numero SEM ESPAÇOS: ";
+    	cout << "Digite uma frase ou numero SEM ESPAÇOS: ";
    
    gets (str);
 
@@ -60,20 +59,24 @@ int main(int argc, char* argv[])
 	
    system ("pause");
 
-   while(numero1 != 1)
-   {
-   		i=0;
-   		
-		   aux = aux * (numero1-1);
-    
-	  numero1--;
-      
-    for (int i=0;i<=numero;i++){
+   
+//   do
+//   {
+//   	
+//   		i=0;
+//   		
+//		   aux = aux * (numero1-1);
+//    
+//	  numero1--;
+
+    for (int i=0;i<=numero1;i++){
         swap(str[i], str[i+1]);
         counter+=1;
         cout <<counter<<" "<< str << endl;
     }
-}
+
+
+//while(numero1 >= 1);
       
 
     system("PAUSE");
